@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title_block %}Dashboard{% endblock %}
+
+{% block style_block %}
+<style>
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+     background-image: url("{{ url_for('static', filename='images/pici.avif') }}"); 
+    
+    background-size: cover; /* Ensures the image covers the entire body */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    color: #ffffff; /* Text color */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .topbarforweb {
+        padding: 15px 20px;
+        background-color: #23272a; /* Discord's top bar background */
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #ffffff;
+        font-size: 24px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .navbar-nav {
+        list-style-type: none;
+        display: flex;
+        margin: 0;
+    }
+
+    .nav-link {
+        color: #b9bbbe;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #7289da;
+    }
+
+    .usernames {
+        font-size: 36px;
+        color: #ffffff;
+        margin-top: 80px; /* To make space for the fixed navbar */
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .quizbigdiv {
+        width: 80%;
+        max-width: 1200px;
+        margin: 80px auto 0; /* Adds some margin to ensure it doesn't touch the top */
+    }
+
+    .inputdiv {
+        width: 100%;
+        padding: 15px;
+        background-color: #40444b; /* Input background */
+        color: #ffffff;
+        border: 1px solid #2f3136;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-bottom: 30px;
+        outline: none;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .inputdiv:focus {
+        border-color: #7289da;
+        box-shadow: 0 0 10px rgba(114, 137, 218, 0.6);
+    }
+
+    .allquizbox {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .myquix {
+        background-color: #3a3f47;
+        padding: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .myquix:hover {
+        background-color: #5a5f68;
+        transform: scale(1.05);
+    }
+
+    .myquix:active {
+        transform: scale(0.98);
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    /* Profile Button Styling */
+    .profile-btn {
+        background-color: #b566f1;
+        color: white;
+        font-size: 16px;
+        padding: 8px 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        border: none;
+        margin-left: 20px;
+    }
+
+    .profile-btn:hover {
+        background-color: #5c6d9a;
+        transform: scale(1.05);
+    }
+
+    .profile-btn:active {
+        transform: scale(0.98);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .topbarforweb {
+            padding: 10px;
+        }
+
+        .usernames {
+            font-size: 28px;
+        }
+
+        .inputdiv {
+            font-size: 14px;
+        }
+
+        .myquix {
+            font-size: 16px;
+            padding: 15px;
+        }
+
+        .profile-btn {
+            font-size: 14px;
+            padding: 6px 14px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main_block %}
+<div class="fullpage">
+    <div class="topbarforweb">
+        <div class="lefttop">Quizzers</div>
+        <div class="righttop">
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+                    </li>
+                    <!-- Add Profile Button -->
+                    <li class="nav-item">
+                        <a class="nav-link profile-btn" href="{{ url_for('postques') }}">Create Your Own Quiz</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="usernames">Hello, {{ current_user.name }}</div>
+
+    <div class="quizbigdiv">
+        <input type="text" class="inputdiv" placeholder="Search quizzes...">
+        <div class="allquizbox">
+            {% for quiz in allquizzes %}
+                <a href="{{ url_for('quizques', quizid=quiz.id) }}" class="myquix">
+                    {{ quiz.quiz_name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

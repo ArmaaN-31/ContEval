@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Challenge</title>
+    <style>
+        @font-face {
+    font-family: 'titlefont';
+    src: url('../static/fonts/aaa.ttf') format('truetype'); /* Supports .ttf */
+    font-weight: normal;
+    font-style: normal;
+}
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-image: url(../static/images/bgc.jpg);
+            /* background: linear-gradient(135deg, #6a11cb, #2575fc), url('https://source.unsplash.com/1600x900/?quiz,game,brain'); */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nvimg{
+            width: 10px;
+            height: 50%;
+            border-radius: 50%;
+            background-color: white;
+            /* margin-top: 20px; */
+        }
+
+        /* Header Navigation */
+        .header-nav {
+            margin-left: 50%;
+            transform: translate(-50%);
+            margin-top: 1rem;
+            width: 40%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-radius: 30px;
+        }
+
+        .header-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 0 20px;
+            transition: 0.3s;
+            /* padding: 7px; */
+            padding-top: 8px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 4px;
+            border-radius: 20px;
+            font-family: titlefont;
+
+        }
+
+        .header-nav a:hover {
+            color: #89CFF0;
+            transform: scale(1.1);
+            background-color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            /* margin-top: 80px; Adjusted for the fixed navbar */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Title with Effect */
+        .title {
+            font-family: titlefont;
+    font-size: 150px;
+    color:  blac;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: fadeInBounce 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    transition: ease-in-out 0.5s;
+}
+.title:hover{
+    transform: scale(1.1);
+}
+
+@keyframes fadeInBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(10px);
+    }
+    80% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+        /* Centered Button */
+        .btn {
+            background-color: #feb47b;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            color: #fff;
+            border-radius: 30px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-top: 60px;
+            font-family: titlefont;
+            text-decoration: none;
+            padding-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #ff7e5f;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+        .description {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <nav class="header-nav">
+        
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('about') }}">About Us</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="title">QUIZZERS</div>
+        <p class="description">Are you ready to challenge your mind and test your knowledge? Compete with friends, explore exciting topics, and climb the leaderboard. Every question takes you one step closer to becoming the ultimate quiz champion!</p>
+        <a href="{{ url_for('login') }}" class="btn">Start Quiz</a>
+    </div>
+
+</body>
+</html>

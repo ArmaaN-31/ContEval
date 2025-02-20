@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block title_block %}Create a Quiz{% endblock %}
+
+{% block style_block %}
+<style>
+  body {
+    background-color: #36393f;
+    color: #dcddde;
+    font-family: Arial, sans-serif;
+    background-image: url(../static/images/3188416.jpg);
+    background-position: center;
+    background-size: cover;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #2f3136;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .question-box {
+    background: #40444b;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    position: relative;
+  }
+
+  .delete-btn {
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    position: absolute;
+    top: -19px;
+    right: -10px;
+    border-radius: 3px;
+    width: 30px;
+    display: flex;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input, select {
+    width: 96%;
+    background: #2f3136;
+    border: 1px solid #72767d;
+    color: #dcddde;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  select {
+    width: 99%;
+  }
+
+  label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  button {
+    width: 100%;
+    background: #5865f2;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background: #4752c4;
+  }
+
+  #addQuestion {
+    background: #3ba55d;
+  }
+
+  #addQuestion:hover {
+    background: #2d7d46;
+  }
+</style>
+{% endblock %}
+
+{% block main_block %}
+<div class="container">
+  <div class="title">Create a Quiz</div>
+  <form method="POST" id="quizForm">
+    
+    <!-- Quiz Name Input -->
+    <label>Quiz Name</label>
+    <input type="text" id="quizName" name="quiz_name" placeholder="Enter the quiz name..." required>
+
+    <div id="questionsContainer">
+      <!-- Questions will be added dynamically here -->
+    </div>
+
+    <button type="button" id="addQuestion">➕ Add Question</button>
+    <button type="submit">📤 Submit Quiz</button>
+  </form>
+</div>
+
+<script>
+  let questionCount = 0;
+
+  function addQuestion() {
+    questionCount++;
+    const questionHTML = `
+      <div class="question-box" id="question-${questionCount}">
+        <button type="button" class="delete-btn" onclick="removeQuestion(${questionCount})">❌</button>
+        <label>Question</label>
+        <input type="text" name="question_${questionCount}" placeholder="Enter your question..." required>
+
+        <label>Option A</label>
+        <input type="text" name="option_${questionCount}_a" placeholder="Enter option A..." required>
+
+        <label>Option B</label>
+        <input type="text" name="option_${questionCount}_b" placeholder="Enter option B..." required>
+
+        <label>Option C</label>
+        <input type="text" name="option_${questionCount}_c" placeholder="Enter option C..." required>
+
+        <label>Option D</label>
+        <input type="text" name="option_${questionCount}_d" placeholder="Enter option D..." required>
+
+        <label>Correct Answer</label>
+        <select name="correct_answer_${questionCount}" required>
+          <option value="A">Option A</option>
+          <option value="B">Option B</option>
+          <option value="C">Option C</option>
+          <option value="D">Option D</option>
+        </select>
+      </div>
+    `;
+
+    document.getElementById("questionsContainer").insertAdjacentHTML("beforeend", questionHTML);
+  }
+
+  function removeQuestion(id) {
+    const questionElement = document.getElementById(`question-${id}`);
+    questionElement.remove();
+  }
+
+  // Submit form handler
+  document.getElementById("quizForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const quizName = document.getElementById("quizName").value;
+    const questions = [];
+
+    for (let i = 1; i <= questionCount; i++) {
+        const questionTextElement = document.querySelector(`[name="question_${i}"]`);
+        const optionAElement = document.querySelector(`[name="option_${i}_a"]`);
+        const optionBElement = document.querySelector(`[name="option_${i}_b"]`);
+        const optionCElement = document.querySelector(`[name="option_${i}_c"]`);
+        const optionDElement = document.querySelector(`[name="option_${i}_d"]`);
+        const correctAnswerElement = document.querySelector(`[name="correct_answer_${i}"]`);
+
+        if (questionTextElement && optionAElement && optionBElement && optionCElement && optionDElement && correctAnswerElement) {
+            const question = questionTextElement.value;
+            const optionA = optionAElement.value;
+            const optionB = optionBElement.value;
+            const optionC = optionCElement.value;
+            const optionD = optionDElement.value;
+            const correctAnswer = correctAnswerElement.value;
+
+            // Process and add the question data to the quiz data
+            questions.push({
+                question: question,
+                option1: optionA,
+                option2: optionB,
+                option3: optionC,
+                option4: optionD,
+                correctanswer: correctAnswer
+            });
+        } else {
+            console.error(`Missing element for question ${i}`);
+        }
+    }
+
+    const data = {
+        quiz_name: quizName,
+        quiz_data: questions,
+    };
+
+    // Send data to backend using fetch
+    fetch('/postquesinform', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Quiz submitted successfully!');
+    })
+    .catch(error => {
+        alert('Error submitting quiz!');
+    });
+  });
+
+  document.getElementById("addQuestion").addEventListener("click", addQuestion);
+  addQuestion(); // Add the first question by default
+</script>
+{% endblock %}

@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+
+{% block title_block %}About Us Page{% endblock %}
+
+{% block style_block %}
+<style>
+    /* General Styling */
+    body {
+        background: linear-gradient(135deg, #667eea, #764ba2); /* Similar gradient to login page */
+        padding-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        color: #ffffff;
+        animation: fadeIn 1s forwards;
+    }
+
+    /* Fade-in Animation for the body */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .container {
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+        padding: 3em;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        max-width: 900px;
+        width: 90%;
+        margin: 20px auto;
+        text-align: center;
+        animation: slideIn 1.5s ease-out;
+    }
+
+    /* Slide-in animation */
+    @keyframes slideIn {
+        0% {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    h1, h2 {
+        color: #ffcc70; /* Updated to match the Login page contrast */
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+        font-size: 3em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+
+    .person-row {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .person-info {
+        background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent background */
+        padding: 2em;
+        margin: 1.5em 0;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        flex: 1;
+        max-width: 280px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .person-info:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .photo img{
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: #ddd;
+        margin: 0 auto 20px;
+        background-size: cover;
+        background-position: center;
+        border: 4px solid #ffcc70;
+    }
+
+    .name {
+        font-size: 1.7em;
+        color: #fff;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .contact {
+        font-size: 1.2em;
+        color: #e0e0e0;
+    }
+
+    .game-info {
+        margin-top: 3em;
+        line-height: 1.7em;
+        font-size: 1.2em;
+        color: #e0e0e0;
+        transform: translateY(30px);
+        opacity: 0;
+        animation: slideIn 1s ease-out forwards;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+        margin-top: 15px;
+    }
+
+    li {
+        margin: 10px 0;
+        padding-left: 1em;
+    }
+
+    .rating {
+        margin-top: 3em;
+        font-size: 1.5em;
+        color: #fff;
+        animation: fadeIn 2s ease-out forwards;
+    }
+
+    .stars {
+        display: inline-block;
+        font-size: 2.5em;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .stars span {
+        color: #f0ad4e;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .stars span:hover {
+        color: #f0d600;
+        transform: scale(1.2);
+    }
+
+    .selected {
+        color: #f0d600;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            font-size: 15px;
+        }
+
+        .person-row {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 477px) {
+        .container {
+            font-size: 13px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main_block %}
+<div class="container">
+    <h1>Developed By:</h1>
+
+    <!-- Personal Info Section in Row -->
+    <div class="person-row">
+        <!-- First Person -->
+        <div class="person-info">
+            <div class="photo">
+                <img src="{{ url_for('static', filename='images/Aayush.jpg') }}" alt="Aayush Image">
+            </div>
+            <p class="name">Aayush</p>
+            <p class="contact">(7009080001)</p>
+            <p>(xyz@gmail.com)</p>
+        </div>
+
+        <!-- Second Person -->
+        <div class="person-info">
+            <div class="photo">
+                <img src="{{ url_for('static', filename='images/Armaan.jpg') }}" alt="Armaan Image">
+            </div>
+            <p class="name">Armaan Singh Mann</p>
+            <p class="contact">(7657950002)</p>
+            <p>(abc@gmail.com)</p>
+        </div>
+
+        <!-- Third Person -->
+        <div class="person-info">
+            <div class="photo">
+                <img src="{{ url_for('static', filename='images/Akash.jpg') }}" alt="Akash Image">
+            </div>
+            <p class="name">Akash Anand</p>
+            <p class="contact">(7714500003)</p>
+            <p>(pqr@gmail.com)</p>
+        </div>
+
+        <!-- Fourth Person -->
+        <div class="person-info">
+            <div class="photo">
+                <img src="{{ url_for('static', filename='images/Isha.jpg') }}" alt="Isha Image">
+            </div>
+            <p class="name">Isha</p>
+            <p class="contact">(8001234567)</p>
+            <p>(srq@gmail.com)</p>
+        </div>
+    </div>
+
+    <!-- About Game Section -->
+    <div class="game-info">
+        <h2>About the Quiz Game</h2>
+        <p>Our Quiz Game is designed to entertain and challenge players with a wide range of questions across multiple categories. Whether you're testing your general knowledge or aiming for the high score, this game provides a fun and engaging experience.</p>
+        <h2>Features</h2>
+        <ul>
+            <li>💡 <strong>Multiple Categories:</strong> Choose from topics like science, history, sports, and more!</li>
+            <li>⏳ <strong>Time Limit:</strong> Answer quickly to score more points.</li>
+            <li>🌟 <strong>Leaderboard:</strong> Compete with friends and see who ranks highest.</li>
+            <li>🔄 <strong>Endless Fun:</strong> Hundreds of questions keep the excitement going.</li>
+        </ul>
+        <p>Get ready to test your knowledge and enjoy hours of trivia fun with friends or on your own. Let the challenge begin!</p>
+    </div>
+
+    <!-- Rating Section -->
+    <div class="rating">
+        <h2>Rate Our Game</h2>
+        <p>Please rate the game:</p>
+        <div class="stars">
+            <span data-value="1">⭐</span>
+            <span data-value="2">⭐</span>
+            <span data-value="3">⭐</span>
+            <span data-value="4">⭐</span>
+            <span data-value="5">⭐</span>
+        </div>
+        <p id="rating-value">Your rating: 0</p>
+        <p>Your rating helps us improve the game!</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    // JavaScript for rating functionality
+    const stars = document.querySelectorAll('.stars span');
+    const ratingValue = document.getElementById('rating-value');
+    let currentRating = 0;
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            currentRating = star.getAttribute('data-value');
+            updateRatingDisplay();
+        });
+
+        star.addEventListener('mouseover', () => {
+            highlightStars(star.getAttribute('data-value'));
+        });
+
+        star.addEventListener('mouseout', () => {
+            highlightStars(currentRating);
+        });
+    });
+
+    function highlightStars(rating) {
+        stars.forEach(star => {
+            star.classList.remove('selected');
+            if (star.getAttribute('data-value') <= rating) {
+                star.classList.add('selected');
+            }
+        });
+    }
+
+    function updateRatingDisplay() {
+        ratingValue.textContent = `Your rating: ${currentRating}`;
+        document.querySelectorAll('.stars span').forEach(star => {
+            star.classList.toggle('selected', star.getAttribute('data-value') <= currentRating);
+    });
+}
+</script>
+{% endblock %}

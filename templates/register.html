@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block title_block %}Registration Page{% endblock %}
+
+{% block style_block %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2); /* Gradient background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #ffffff;
+        overflow: hidden;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center; /* Center content */
+        align-items: center;
+        max-width: 1400px; /* Increased container width */
+        width: 100%;
+        gap: 80px; /* Increased gap between form and right side content */
+        padding: 20px;
+    }
+
+    .register-container {
+        background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+        padding: 40px 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        backdrop-filter: blur(10px); /* Add blur effect */
+        opacity: 0;
+        transform: translateY(20px); /* Initial position is below */
+        animation: fadeInUp 1.5s forwards; /* Animation for visibility */
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px); /* Start from below */
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0); /* End at original position */
+        }
+    }
+
+    h2 {
+        font-size: 36px;
+        margin-bottom: 30px;
+        color: #ffcc70; /* Header color */
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .input-group label {
+        font-size: 14px;
+        color: #e0e0e0; /* Lighter label color */
+        margin-bottom: 5px;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+        color: #ffffff;
+        border: 1px solid #2f3136;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .input-field:focus {
+        border: 1px solid #ffcc70; /* Focus border color */
+        box-shadow: 0 0 8px rgba(114, 137, 218, 0.6);
+    }
+
+    .submit-btn {
+        background-color: #ffcc70;
+        color: #ffffff;
+        padding: 15px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background-color: #ffab40;
+    }
+
+    .login-link {
+        font-size: 14px;
+        color: #e0e0e0;
+        margin-top: 20px;
+    }
+
+    .login-link a {
+        color: #ffcc70;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+
+    .right-container {
+        max-width: 500px;
+        color: #fff;
+        padding: 30px;
+        background: rgba(0, 0, 0, 0.5); /* Slightly dark background for text */
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px); /* Apply blur effect */
+        opacity: 0;
+        transform: translateY(20px); /* Start below */
+        animation: fadeInUp 1.5s forwards, zoomIn 1s forwards; /* Animation for visibility */
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(0.8); }
+        to { transform: scale(1); }
+    }
+
+    .right-container h3 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #ffcc70;
+    }
+
+    .right-container p {
+        font-size: 18px;
+        margin-top: 15px;
+        line-height: 1.6;
+        color: #e0e0e0;
+    }
+
+    @media (max-width: 900px) {
+        .container {
+            flex-direction: column; /* Stack the form and right container vertically on small screens */
+            gap: 40px;
+        }
+
+        .register-container {
+            max-width: 90%; /* Adjust width */
+        }
+
+        .right-container {
+            max-width: 90%; /* Adjust width */
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main_block %}
+<div class="container">
+    <!-- Right Side Content -->
+    <div class="right-container">
+        <h3>Hi Friend!</h3>
+        <p>Welcome to Quizzers! Here, you can test your knowledge and improve your brainpower with a variety of fun and challenging quiz games. Each quiz offers a unique topic, from science to history, ensuring there's something for everyone!</p>
+        <p>Compete against friends and global players. Challenge yourself to become the ultimate quiz champion. Are you ready to take on the quiz world?</p>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="{{url_for('register')}}" method="POST">
+            <div class="input-group">
+                <label for="name">Full Name:</label>
+                <input type="text" name="name" id="name" class="input-field" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" class="input-field" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" class="input-field" placeholder="Enter your password" minlength="8" required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="input-field" placeholder="Confirm your password" required>
+            </div>
+
+            <div class="input-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" name="mobile" id="mobile" class="input-field" placeholder="Enter your mobile number" minlength="10" required>
+            </div>
+
+            <div class="input-group">
+                <input type="submit" class="submit-btn" value="Register">
+            </div>
+        </form>
+
+        <p class="login-link">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </div>
+</div>
+{% endblock %}
